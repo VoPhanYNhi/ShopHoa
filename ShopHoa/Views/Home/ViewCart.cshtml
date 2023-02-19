@@ -1,0 +1,61 @@
+﻿@model List<ShopHoa.Models.CartItem>
+<br />
+<h3>Giỏ hàng của bạn</h3>
+
+@if (Model.Count > 0)
+{
+    int num = 1;        // số thứ tự
+    int amount = 0;     // thành tiền
+    int total = 0;      // tổng tiền
+
+    <table class="table">
+        <tr>
+            <th>STT</th>
+            <th>Tên hoa</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+            <th></th>
+        </tr>
+        @foreach (var i in Model)
+        {
+            amount = i.Hoa.Gia * i.Quantity;
+            total += amount;
+            <tr class="align-middle">
+                <td>@(num++)</td>
+                <td>
+                    <img src="~/images/@(i.Hoa.Image)" class="img-thumbnail" width="50" />
+                    @(i.Hoa.TenHoa)
+                </td>
+                <td>@(i.Hoa.Gia.ToString("n0"))</td>
+                <td>
+                    <form asp-action="UpdateItem" method="post">
+                        <div class="row">
+                            <div class="col">
+                                <input name="id" type="hidden" asp-for="@(i.Hoa.HoaId)" />
+                                <input name="quantity" type="number" asp-for="@(i.Quantity)" class="form-control" />
+                            </div>
+                            <div class="col">
+                                <input class="btn btn-warning" type="submit" value="Cập nhật" />
+                            </div>
+                        </div>
+                    </form>
+                </td>
+                <td>@(amount.ToString("n0"))</td>
+                <td><a asp-action="RemoveItem" asp-route-id="@i.Hoa.HoaId" class="btn btn-danger">Xóa</a></td>
+            </tr>
+        }
+        <tr>
+            <td colspan="4" class="text-end">Thành tiền</td>
+            <td colspan="2"><strong class="text-danger">@(total.ToString("n0"))</strong></td>
+        </tr>
+    </table>
+    <div class="text-end">
+        <a class="btn btn-info" asp-action="CheckOut">Thanh toán</a>
+    </div>
+}
+else
+{
+    <p class="alert alert-danger">Giỏ hàng rỗng!</p>
+}
+

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ShopHoa.Models.Hoa>
+
+@{
+    ViewData["Title"] = "Hoa sinh nhật";
+}
+
+
+<section class="py-5">
+    <div class ="col d-flex justify-content-center">
+        <form asp-controller="Home" asp-action="TimHoaSinhNhat" method="get">
+            <div class="form-actions no-color">
+                <p>
+                    Nhập tên hoa:
+                    <input type="text" name="SearchString" />
+                    <input type="submit" value="Search" class="btn btn-outline-dark" /> |
+                    <a asp-controller="Home" asp-action="TimHoaSinhNhat" class="link-dark">Danh sách đầy đủ</a>
+                </p>
+            </div>
+        </form>
+    </div>
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var item in Model){
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Product image-->
+                        <img class="card-img-top" src="~/images/@Html.DisplayFor(modelItem => item.Image)" alt="..." />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">@Html.DisplayFor(modelItem => item.TenHoa)</h5>
+                            <!-- Product price-->
+                            @Html.DisplayFor(modelItem => item.Gia)
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" asp-action="Details" asp-route-id="@item.HoaId">Chi tiêt</a></div>
+                        <br>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" asp-action="AddToCart" asp-route-id="@item.HoaId">Thêm vào giỏ</a></div>
+                    </div>
+
+                </div>
+            </div>          
+            }
+
+        </div>
+    </div>
+</section>

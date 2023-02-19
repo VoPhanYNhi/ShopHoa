@@ -1,0 +1,190 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ShopHoa</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+<body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Shop Hoa</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="nav-link text-dark" asp-controller="Home" asp-action="TimHoa">Tất cả hoa</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" asp-controller="Home" asp-action="TimHoaSinhNhat">Hoa sinh nhật</a></li>
+                            <li><a class="dropdown-item" asp-controller="Home" asp-action="TimHoaChucMung">Hoa chúc mừng</a></li>
+                            <li><a class="dropdown-item" asp-controller="Home" asp-action="TimHoaCuoi">Hoa cưới</a></li>
+                            <li><a class="dropdown-item" asp-controller="Home" asp-action="TimHoaTotNghiep">Hoa tốt nghiệp</a></li>
+                            <li><a class="dropdown-item" asp-controller="Home" asp-action="TimHoaTinhYeu">Hoa tình yêu</a></li>
+                        </ul>
+                    </li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Quản lý</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                <li><a class="dropdown-item" asp-controller="Hoas" asp-action="Index">Hoa</a></li>
+                                <li><a class="dropdown-item" asp-controller="LoaiHoas" asp-action="Index">Loại Hoa</a></li>
+                                <li><a class="dropdown-item" asp-controller="Bills" asp-action="Index">Hóa đơn</a></li>
+                                <li><a class="dropdown-item" asp-controller="BillDetails" asp-action="Index">Hóa đơn chi tiết</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+                        </li>
+                        <li class="nav-item">
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button type="submit" class="nav-link btn btn-link text-dark">Đăng xuất</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Đăng ký</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a>
+                        </li>
+                    }
+               
+                </ul>
+                <form class="d-flex">
+                    <button class="btn btn-outline-dark" asp-controller="Home" asp-action="ViewCart" type="submit">
+                        <i class="bi-cart-fill me-1"></i>
+                        Giỏ hàng
+                    </button>
+                </form>
+                
+            </div>
+        </div>
+    </nav>
+    <header class="bg-dark">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="~/images/carousel/banner1.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/images/carousel/banner2.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/images/carousel/banner3.jpg" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer-->
+    <footer class="text-center text-lg-start text-muted bg-dark text-white p-3">
+        
+        <!-- Section: Social media -->
+        <!-- Section: Links  -->
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <i class="fas fa-gem me-3"></i>Shop Hoa
+                        </h6>
+                        <p>
+                            Shop Hoa Tươi, Cửa hàng đặt hoa Online Uy Tín, Chất Lượng, Giá Rẻ , Giao Hoa Tận Nơi, Mẫu Đa Dạng, hiện đại.
+                            Đặt hoa tươi online giao MIỄN PHÍ. Shop hoa tươi uy tín tại Việt Nam
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Các loại hoa
+                        </h6>
+                        <p>
+                            <a asp-controller="Home" asp-action="TimHoaSinhNhat" class="text-reset">Hoa sinh nhật</a>
+                        </p>
+                        <p>
+                            <a asp-controller="Home" asp-action="TimHoaChucMung" class="text-reset">Hoa chúc mừng</a>
+                        </p>
+                        <p>
+                            <a asp-controller="Home" asp-action="TimHoaCuoi" class="text-reset">Hoa cưới</a>
+                        </p>
+                        <p>
+                            <a asp-controller="Home" asp-action="TimHoaTotNghiep" class="text-reset">Hoa tốt nghiệp</a>
+                        </p>
+                        <p>
+                            <a asp-controller="Home" asp-action="TimHoaTinhYeu" class="text-reset">Hoa tình yêu</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+                    
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">Liên hệ</h6>
+                        <p><i class="fas fa-home me-3"></i> Long Xuyên, An Giang, Việt Nam</p>
+                        <p>
+                            <i class="fas fa-envelope me-3"></i>
+                            shopHoa@gmail.com
+                        </p>
+                        <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                        <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+            </div>
+        </section>
+        <!-- Section: Links  -->
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2022 Copyright:
+            <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

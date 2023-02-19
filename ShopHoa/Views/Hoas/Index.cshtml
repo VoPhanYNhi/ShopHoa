@@ -1,0 +1,71 @@
+﻿@model IEnumerable<ShopHoa.Models.Hoa>
+
+@{
+    ViewData["Title"] = "Quản lý hoa";
+}
+
+<div class="col d-flex justify-content-center py-5">
+    <form asp-controller="Hoas" asp-action="Index" method="get">
+        <div class="form-actions no-color">
+            <p>
+                Nhập tên hoa:
+                <input type="text" name="SearchString" />
+                <input type="submit" value="Search" class="btn btn-outline-dark" /> |
+                <a asp-controller="Hoas" asp-action="Index" class="link-dark">Danh sách đầy đủ</a>
+            </p>
+        </div>
+    </form>
+    <div class="ml-5">
+        <a class="btn btn-outline-dark mt-auto" asp-action="Create">Thêm mới</a>
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenHoa)                
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoLuong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                Loại hoa
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenHoa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>            
+            <td>
+                <img src="~/images/@Html.DisplayFor(modelItem => item.Image)" class="img-thumnail" width="100" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiHoa.TenLoai)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.HoaId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.HoaId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.HoaId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

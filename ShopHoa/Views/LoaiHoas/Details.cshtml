@@ -1,0 +1,47 @@
+﻿@model ShopHoa.Models.LoaiHoa
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>LoaiHoa</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TenLoai)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TenLoai)
+        </dd>
+        <dt class="col-sm-2">
+            Danh sách hoa
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Tên hoa</th>
+                    <th>Giá</th>
+                </tr>
+                @foreach (var i in Model.Hoas)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/images/@(i.Image)" width="70" class="img-thumbnail">
+                            @(i.TenHoa)
+                        </td>
+                        <td>
+                            @(i.Gia)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.LoaiId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

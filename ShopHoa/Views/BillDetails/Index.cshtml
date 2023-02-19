@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ShopHoa.Models.BillDetail>
+
+@{
+    ViewData["Title"] = "Quản lý chi tiết hóa đơn";
+}
+
+<table class="table table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                Customer
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hoa)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bill.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hoa.TenHoa)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BillDetailId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BillDetailId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BillDetailId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

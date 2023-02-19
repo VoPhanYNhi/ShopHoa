@@ -1,0 +1,36 @@
+﻿@model ShopHoa.Models.Hoa
+
+@{
+    ViewData["Title"] = "Chi tiết";
+}
+<br />
+<div class="container">
+		<div class="card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+
+                        <img src="~/images/@Html.DisplayFor(model => model.Image)" class="img-fluid" width="500" />
+												
+					</div>
+					<div class="details col-md-6">
+                        <br />
+                        <h3>@Html.DisplayFor(model => model.TenHoa)</h3>
+						<p><b>Loại: </b>@Html.DisplayFor(model => model.LoaiHoa.TenLoai)</p>
+                        <p><b>Mô tả: </b>@Html.DisplayFor(model => model.MoTa)</p>
+                        <h4>Giá: <span>@Html.DisplayFor(model => model.Gia)</span></h4>
+						@{
+							
+						}					
+						<br /><br />
+
+					<div class="text-center">
+						<a class="btn btn-outline-success mt-auto" asp-action="AddToCart" asp-route-id="@Model.HoaId">Thêm vào giỏ</a>
+						&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-outline-danger mt-auto" asp-action="Index">Quay lại</a>
+                    </div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
